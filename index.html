@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/milligram/1.0.3/milligram.min.css">
+  <style>
+    body {
+      margin:1em;
+    }
+    
+    #results {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .playlist {
+      flex-basis: 48%;
+      display: inline-block;
+      height: 70px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border: 1px solid #9b4dca;
+      border-top: 3px solid #9b4dca;
+      margin-bottom: 20px;
+      padding: 20px;
+    }
+    .playlist:hover {
+      border: 1px solid #333;
+      border-top: 5px solid #333;
+      padding-top: 18px;
+    }
+    
+    input, button {
+      border-radius: 0px !important;
+    }
+  </style>
+</head>
+<body>
+  <form id=playlist>
+    <div class="container">
+      <div class="row">
+        <div class="column">
+          <label>Artist</label>
+          <input type=text id=artist placeholder="Klyne" required />
+        </div>
+        <div class="column">
+          <label>Song</label>
+          <input type=text id=song placeholder="Closer" required />
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+          <button id=search type=submit>Search</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div id=results class=container></div>
+  <script>
+    $('#playlist').submit(function (e) {
+      $('#search').html('Loading');
+      $('#search').disabled = true;
+      getThings($('#artist').val(), $('#song').val());
+      
+      e.preventDefault();
+      return false;
+    });
+    
+    function getThings(artist, song) {
+     $('#results').html(''); $.get('https://www.googleapis.com/customsearch/v1?q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
+        data.items.forEach(function (item) {
+          $('#results').append('<a target="_blank" class="playlist" href="' + item.link + '">' + item.title.replace(/on Spotify/gi, '') + ' by ' + item.link.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
+        });
+        
+        $('#search').html('Search');
+        $('#search').disabled = false;
+      });
+    }
+  </script>
+</body>
+</html>
