@@ -80,7 +80,9 @@
         
         $('#search').html('Search');
         $('#search').disabled = false;
-      });
+      }).fail(function (err, res) {
+       $('#results').append(err.responseJSON.error.message);
+     });
     }
   </script>
 </body>
