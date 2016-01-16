@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-2.1.4.js"></script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>Spotify Playlist Finder | Kevin Reed</title>
@@ -38,7 +37,6 @@
     .ads {
       margin-top: 2em;
     }
-    
     input, button {
       border-radius: 0px !important;
     }
@@ -81,6 +79,10 @@
       </div>
     </div>
   </div>
+  
+  <script src="//code.jquery.com/jquery-2.1.4.js"></script>
+  <script src="//cdn.rawgit.com/yckart/jquery.base64.js/master/jquery.base64.js"></script>
+  <script src="//cdn.rawgit.com/cbenard/jquery-bingsearch/master/jquery.bingsearch-min.js"></script>
   <script>
     $('#playlist').submit(function (e) {
       $('#search').html('Loading');
@@ -92,7 +94,9 @@
     });
     
     function getThings(artist, song) {
-     $('#results').html(''); $.get('https://www.googleapis.com/customsearch/v1?q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
+      $('#results').html('');
+     
+      $.get('https://www.googleapis.com/customsearch/v1?q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
         data.items.forEach(function (item) {
           $('#results').append('<a target="_blank" class="playlist" href="' + item.link + '">' + item.title.replace(/on Spotify/gi, '') + ' by ' + item.link.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
         });
@@ -100,7 +104,24 @@
         $('#search').html('Search');
         $('#search').disabled = false;
       }).fail(function (err, res) {
-       $('#results').append(err.responseJSON.error.message);
+       
+        $.bingSearch({
+          appKey: '1wmAfbhQ/5kIdHi8ipaJOmhQ6/XIZMAXscd4d9B0t2E',
+          pageNumber: 1,
+          query: 'site:spotify.com instreamset:(url):"playlist" "' + artist + '"+"' + song + '"',
+          debug: false,
+          beforeSearchResults: function(data) {},
+          searchResultIterator: function(data) {
+            $('#results').append('<a target="_blank" class="playlist" href="' + data.Url + '">' + data.Title.replace(/on Spotify/gi, '') + ' by ' + data.Url.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
+          },
+          afterSearchResults: function(data) {
+            $('#search').html('Search');
+            $('#search').disabled = false;
+          },
+          fail: function () {
+            $('#results').append('Sorry, I can\'t search for playlists right now');
+          }
+        });
      });
     }
   </script>
