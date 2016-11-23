@@ -106,14 +106,19 @@
           data.items.forEach(function (item) {
             $('#results').append('<a target="_blank" class="playlist" href="' + item.link + '">' + item.title.replace(/on Spotify/gi, '') + ' by ' + item.link.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
           });
-          $.get('https://www.googleapis.com/customsearch/v1?start=21&q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
+          $.get('https://www.googleapis.com/customsearch/v1?start=22&q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
             data.items.forEach(function (item) {
               $('#results').append('<a target="_blank" class="playlist" href="' + item.link + '">' + item.title.replace(/on Spotify/gi, '') + ' by ' + item.link.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
             });
-            $.get('https://www.googleapis.com/customsearch/v1?start=31&q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
+            $.get('https://www.googleapis.com/customsearch/v1?start=33&q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
               data.items.forEach(function (item) {
                 $('#results').append('<a target="_blank" class="playlist" href="' + item.link + '">' + item.title.replace(/on Spotify/gi, '') + ' by ' + item.link.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
               });
+              $.get('https://www.googleapis.com/customsearch/v1?start=44&q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
+                data.items.forEach(function (item) {
+                  $('#results').append('<a target="_blank" class="playlist" href="' + item.link + '">' + item.title.replace(/on Spotify/gi, '') + ' by ' + item.link.replace(/.*\/user\//i, '').replace(/\/.*/, '') + '</a>');
+                });
+              })
             })
           })
         })
