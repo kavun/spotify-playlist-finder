@@ -94,6 +94,10 @@
     });
     
     function getThings(artist, song) {
+      
+      window.location.href="https://www.google.com/#safe=active&q=site:%22spotify.com%22+inurl:%22playlist%22+%22" + artist + "%22+%22" + song + "%22";
+      return;
+      
       $('#results').html('');
      
       $.get('https://www.googleapis.com/customsearch/v1?q=inurl%3A"playlist"+"' + artist + '"+"' + song + '"&key=AIzaSyBSRWY9yneRNUX8Fn2kfqiEG46cVXZ0M4c&cx=014342229352927651696:l6lypkkv5na').done(function (data) {
